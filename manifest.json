@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Excellent Master",
+  "version": "1.0.0",
+  "description": "Google Ads数据管理插件",
+  "author": "fs",
+  
+  "permissions": [
+    "scripting",
+    "storage",
+    "tabs",
+    "webNavigation"
+  ],
+  
+  "host_permissions": [
+    "https://*.google.com/*",
+    "http://*.google.com/*"
+  ],
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.google.com/*",
+        "http://*.google.com/*"
+      ],
+      "js": [
+        "lib/ajaxhook.min.js",
+        "src/config.js",
+        "src/storage.js",
+        "src/interceptor.js",
+        "src/dom-handler.js",
+        "src/main-logic.js",
+        "src/content-script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/*.js",
+        "lib/*.js"
+      ],
+      "matches": [
+        "https://*.google.com/*",
+        "http://*.google.com/*"
+      ]
+    }
+  ],
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
