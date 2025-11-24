@@ -1,76 +1,45 @@
 /**
- * Content Script 入口
+ * Content Script 入口 - 验证模式
  */
-class ContentScriptManager {
-  constructor() {
-    this.log('Content Script 管理器启动');
-    this.init();
-  }
+(function() {
+  console.log('%c[ContentScript] 🚀 启动验证', 'color: #4CAF50; font-weight: bold');
 
-  /**
-   * 初始化
-   */
-  init() {
-    // 注入脚本到页面上下文
-    this.injectScripts();
-  }
+  // 验证关键对象
+  const requiredObjects = {
+    'CONFIG': '配置对象',
+    'Utils': '工具函数',
+    'storageManager': '存储管理器',
+    'dataProcessor': '数据处理器',
+    'requestInterceptor': '请求拦截器',
+    'responseHandlers': '响应处理器',
+    'domHandler': 'DOM处理器',
+    'mainLogic': '主逻辑'
+  };
 
-  /**
-   * 注入脚本
-   */
-  injectScripts() {
-    const scripts = [
-      'src/config.js',           // 首先注入配置文件
-      'src/utils.js',            // 工具函数
-      'src/storage.js',          // 存储管理器
-      'lib/ajaxhook.min.js',     // AJAX钩子库
-      'src/data-processor.js',   // 数据处理器
-      'src/response-handlers.js', // 响应处理器
-      'src/interceptor.js',      // 请求拦截器
-      'src/dom-handler.js',      // DOM处理器
-      'src/main-logic.js'        // 主逻辑（最后注入）
-    ];
-
-    scripts.forEach((scriptPath, index) => {
-      setTimeout(() => {
-        this.injectScript(scriptPath);
-      }, index * 100); // 延迟注入，确保顺序
-    });
-  }
-
-  /**
-   * 注入单个脚本
-   */
-  injectScript(path) {
-    try {
-      const script = document.createElement('script');
-      script.src = chrome.runtime.getURL(path);
-      script.async = false;
-
-      script.onload = () => {
-        script.remove();
-        this.log(`脚本已注入: ${path}`);
-      };
-
-      script.onerror = () => {
-        this.error(`脚本注入失败: ${path}`);
-      };
-
-      (document.head || document.documentElement).appendChild(script);
-    } catch (error) {
-      this.error('注入脚本失败:', error);
+  let allLoaded = true;
+  
+  Object.keys(requiredObjects).forEach(key => {
+    if (window[key]) {
+      console.log(`%c✅ ${requiredObjects[key]} (${key})`, 'color: green');
+    } else {
+      console.error(`%c❌ ${requiredObjects[key]} (${key}) 未加载`, 'color: red; font-weight: bold');
+      allLoaded = false;
     }
+  });
+
+  if (allLoaded) {
+    console.log('%c[ContentScript] ✅ 所有模块加载成功！', 'color: #4CAF50; font-weight: bold; font-size: 14px');
+  } else {
+    console.error('%c[ContentScript] ❌ 部分模块加载失败！请检查控制台', 'color: red; font-weight: bold; font-size: 14px');
   }
 
-  // 日志方法
-  log(...args) {
-    console.log('[ContentScriptManager]', ...args);
+  // 显示版本信息
+  console.log(`%c[ContentScript] 插件版本: 1.0.0 | 调试模式: ${CONFIG?.DEBUG || false}`, 'color: #2196F3');
+  
+  // 显示API配置
+  if (CONFIG?.API?.BASE_URL) {
+    console.log(`%c[ContentScript] API地址: ${CONFIG.API.BASE_URL}`, 'color: #FF9800');
   }
-
-  error(...args) {
-    console.error('[ContentScriptManager]', ...args);
-  }
-}
-
-// 启动管理器
-window.__CONTENT_SCRIPT_MANAGER__ = new ContentScriptManager();
+  
+  window.__CONTENT_SCRIPT_LOADED__ = true;
+})();

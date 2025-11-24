@@ -1,0 +1,48 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Extension in Edge",
+            "type": "msedge",
+            "request": "launch",
+            "url": "edge://extensions/",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\Microsoft Edge.exe",
+            "runtimeArgs": [
+                "--disable-extensions-except=${workspaceFolder}",
+                "--load-extension=${workspaceFolder}",
+                "--user-data-dir=${workspaceFolder}/.edge-profile"
+            ]
+        },
+        {
+            "name": "Launch Extension in Chrome (Dev Mode)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "chrome://extensions/",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Bin\\chrome.exe",
+            "runtimeArgs": [
+                "--disable-extensions-except=${workspaceFolder}",
+                "--load-extension=${workspaceFolder}",
+                "--user-data-dir=${workspaceFolder}/.chrome-profile",
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--allow-running-insecure-content",
+                "--disable-site-isolation-trials"
+            ]
+        },
+        {
+            "name": "Launch Extension in Chrome (Normal)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "https://ads.google.com",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Bin\\chrome.exe",
+            "runtimeArgs": [
+                "--disable-extensions-except=${workspaceFolder}",
+                "--load-extension=${workspaceFolder}",
+                "--user-data-dir=${workspaceFolder}/.chrome-profile"
+            ]
+        }
+    ]
+}

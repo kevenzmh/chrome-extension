@@ -8,7 +8,17 @@ const CONFIG = {
     ENDPOINTS: {
       GET_DATA: '/google-ads/data'
     },
-    TIMEOUT: 10000
+    TIMEOUT: 10000,
+    // 数据模式: 'mock' = 本地JSON, 'api' = 真实API
+    MODE: 'mock'
+  },
+
+  // 本地数据配置
+  MOCK: {
+    DATA_FILE: 'data/mock-data.json',
+    ENABLED: true,
+    AUTO_REFRESH: false, // 是否自动刷新模拟数据
+    REFRESH_INTERVAL: 60000 // 刷新间隔（毫秒）
   },
 
   // 存储配置
@@ -64,3 +74,9 @@ const CONFIG = {
 
 // 导出配置
 window.CONFIG = CONFIG;
+
+// 打印配置信息
+if (CONFIG.DEBUG) {
+  console.log('%c[CONFIG] 配置加载成功', 'color: #4CAF50; font-weight: bold');
+  console.log(`%c[CONFIG] 数据模式: ${CONFIG.API.MODE === 'mock' ? '本地JSON模拟' : '真实API'}`, 'color: #2196F3');
+}

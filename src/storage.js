@@ -3,8 +3,15 @@
  */
 class StorageManager {
   constructor() {
+    // 防御性检查
+    if (typeof CONFIG === 'undefined') {
+      console.error('[StorageManager] CONFIG 未定义！');
+      return;
+    }
+    
     this.storageKey = CONFIG.STORAGE.KEY_SERVER_DATA;
     this.expirationKey = CONFIG.STORAGE.KEY_EXPIRATION;
+    this.log('存储管理器初始化完成');
   }
 
   /**
@@ -70,7 +77,7 @@ class StorageManager {
 
   // 日志方法
   log(...args) {
-    if (CONFIG.DEBUG) {
+    if (typeof CONFIG !== 'undefined' && CONFIG.DEBUG) {
       console.log('[StorageManager]', ...args);
     }
   }
@@ -80,5 +87,12 @@ class StorageManager {
   }
 }
 
-// 导出实例
-window.storageManager = new StorageManager();
+// 安全初始化
+(function initStorageManager() {
+  if (typeof CONFIG !== 'undefined') {
+    window.storageManager = new StorageManager();
+  } else {
+    console.warn('[StorageManager] 等待 CONFIG 加载...');
+    setTimeout(initStorageManager, 50);
+  }
+})();

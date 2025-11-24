@@ -1,0 +1,309 @@
+{
+  "accountCost": {
+    "average_cpm": 15.8,
+    "click_through_rate": 4.2,
+    "clicks": 2580,
+    "cost": 12680.50,
+    "cost_per_click": 4.91,
+    "impressions": 61428,
+    "cost_per_conversion": 85.20,
+    "conversion_rate": 5.8,
+    "conversions": 149,
+    "video_views": 1250
+  },
+  "accountCostChart": [
+    {
+      "date": "2024-11-01",
+      "clicks": 120,
+      "impressions": 2850,
+      "cost": 589.20,
+      "cost_per_click": 4.91
+    },
+    {
+      "date": "2024-11-02",
+      "clicks": 135,
+      "impressions": 3210,
+      "cost": 662.85,
+      "cost_per_click": 4.91
+    },
+    {
+      "date": "2024-11-03",
+      "clicks": 98,
+      "impressions": 2330,
+      "cost": 481.18,
+      "cost_per_click": 4.91
+    },
+    {
+      "date": "2024-11-04",
+      "clicks": 142,
+      "impressions": 3380,
+      "cost": 697.22,
+      "cost_per_click": 4.91
+    },
+    {
+      "date": "2024-11-05",
+      "clicks": 156,
+      "impressions": 3710,
+      "cost": 765.96,
+      "cost_per_click": 4.91
+    }
+  ],
+  "campaignCost": [
+    {
+      "id": "campaign_001",
+      "name": "搜索广告系列-Q4",
+      "budget": "50000",
+      "status": "ENABLED",
+      "clicks": 1580,
+      "impressions": 37528,
+      "cost": 7754.80,
+      "conversions": 92
+    },
+    {
+      "id": "campaign_002",
+      "name": "展示广告系列-品牌推广",
+      "budget": "30000",
+      "status": "ENABLED",
+      "clicks": 680,
+      "impressions": 16180,
+      "cost": 3339.20,
+      "conversions": 39
+    },
+    {
+      "id": "campaign_003",
+      "name": "视频广告系列-产品介绍",
+      "budget": "20000",
+      "status": "PAUSED",
+      "clicks": 320,
+      "impressions": 7720,
+      "cost": 1586.50,
+      "conversions": 18
+    }
+  ],
+  "adCost": [
+    {
+      "id": "ad_001",
+      "name": "主推产品广告A",
+      "status": 1,
+      "primary_status": "APPROVED",
+      "clicks": 850,
+      "impressions": 20220,
+      "cost": 4173.50,
+      "conversions": 49
+    },
+    {
+      "id": "ad_002",
+      "name": "促销活动广告B",
+      "status": 1,
+      "primary_status": "APPROVED",
+      "clicks": 730,
+      "impressions": 17380,
+      "cost": 3584.30,
+      "conversions": 43
+    },
+    {
+      "id": "ad_003",
+      "name": "品牌形象广告C",
+      "status": 2,
+      "primary_status": "LIMITED",
+      "clicks": 520,
+      "impressions": 12380,
+      "cost": 2552.80,
+      "conversions": 30
+    },
+    {
+      "id": "ad_004",
+      "name": "季节性广告D",
+      "status": 1,
+      "primary_status": "APPROVED",
+      "clicks": 480,
+      "impressions": 11448,
+      "cost": 2369.90,
+      "conversions": 27
+    }
+  ],
+  "adGroupCost": [
+    {
+      "id": "adgroup_001",
+      "name": "核心关键词组",
+      "clicks": 980,
+      "impressions": 23320,
+      "cost": 4811.80,
+      "conversions": 57
+    },
+    {
+      "id": "adgroup_002",
+      "name": "长尾关键词组",
+      "clicks": 600,
+      "impressions": 14280,
+      "cost": 2946.00,
+      "conversions": 35
+    }
+  ],
+  "audiencesCost": [
+    {
+      "type": 1,
+      "category": "age",
+      "name": "18-24岁",
+      "clicks": 380,
+      "impressions": 9040,
+      "cost": 1865.80,
+      "conversions": 22
+    },
+    {
+      "type": 1,
+      "category": "age",
+      "name": "25-34岁",
+      "clicks": 920,
+      "impressions": 21900,
+      "cost": 4517.20,
+      "conversions": 53
+    },
+    {
+      "type": 1,
+      "category": "age",
+      "name": "35-44岁",
+      "clicks": 780,
+      "impressions": 18570,
+      "cost": 3829.80,
+      "conversions": 45
+    },
+    {
+      "type": 1,
+      "category": "age",
+      "name": "45-54岁",
+      "clicks": 320,
+      "impressions": 7620,
+      "cost": 1571.20,
+      "conversions": 19
+    },
+    {
+      "type": 1,
+      "category": "age",
+      "name": "55-64岁",
+      "clicks": 180,
+      "impressions": 4290,
+      "cost": 883.80,
+      "conversions": 10
+    },
+    {
+      "type": 2,
+      "category": "gender",
+      "name": "男性",
+      "clicks": 1520,
+      "impressions": 36190,
+      "cost": 7465.20,
+      "conversions": 88
+    },
+    {
+      "type": 2,
+      "category": "gender",
+      "name": "女性",
+      "clicks": 1060,
+      "impressions": 25238,
+      "cost": 5203.30,
+      "conversions": 61
+    },
+    {
+      "type": 3,
+      "category": "income",
+      "name": "高收入",
+      "clicks": 680,
+      "impressions": 16180,
+      "cost": 3339.20,
+      "conversions": 39
+    },
+    {
+      "type": 3,
+      "category": "income",
+      "name": "中等收入",
+      "clicks": 1280,
+      "impressions": 30480,
+      "cost": 6284.80,
+      "conversions": 74
+    },
+    {
+      "type": 3,
+      "category": "income",
+      "name": "低收入",
+      "clicks": 620,
+      "impressions": 14768,
+      "cost": 3044.50,
+      "conversions": 36
+    }
+  ],
+  "keywordCost": [
+    {
+      "keyword": "核心产品词",
+      "clicks": 580,
+      "impressions": 13810,
+      "cost": 2847.80,
+      "conversions": 34
+    },
+    {
+      "keyword": "品牌关键词",
+      "clicks": 420,
+      "impressions": 10000,
+      "cost": 2062.20,
+      "conversions": 24
+    },
+    {
+      "keyword": "竞品词",
+      "clicks": 350,
+      "impressions": 8330,
+      "cost": 1718.50,
+      "conversions": 20
+    }
+  ],
+  "assetCost": [
+    {
+      "asset_type": "图片",
+      "stats.biddable_conversion_value": "8520",
+      "stats.biddable_conversions": "149",
+      "stats.clicks": "2580",
+      "stats.cost": "12680.50",
+      "stats.impressions": "61428",
+      "stats.video_views": 1250
+    },
+    {
+      "asset_type": "视频",
+      "stats.biddable_conversion_value": "5680",
+      "stats.biddable_conversions": "98",
+      "stats.clicks": "1680",
+      "stats.cost": "8245.60",
+      "stats.impressions": "39990",
+      "stats.video_views": 2150
+    }
+  ],
+  "bill": {
+    "balance": 150000,
+    "last_payment_amount": 50000,
+    "last_payment_date": "20241115073601",
+    "payments": 50000,
+    "tax": 6500
+  },
+  "deviceData": {
+    "desktop": {
+      "clicks": 1030,
+      "impressions": 24540,
+      "cost": 5056.30
+    },
+    "mobile": {
+      "clicks": 1290,
+      "impressions": 30710,
+      "cost": 6333.90
+    },
+    "tablet": {
+      "clicks": 260,
+      "impressions": 6178,
+      "cost": 1290.30
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2024-11-24T10:00:00Z",
+    "data_source": "mock",
+    "currency": "CNY",
+    "timezone": "Asia/Shanghai"
+  }
+}

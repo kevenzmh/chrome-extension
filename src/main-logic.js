@@ -10,7 +10,7 @@ class MainLogic {
    * 初始化
    */
   init() {
-    this.log('插件主逻辑启动');
+    this.log('✅ 插件主逻辑启动');
 
     // 等待页面加载完成
     if (document.readyState === 'loading') {
@@ -26,7 +26,7 @@ class MainLogic {
    * 页面准备完成
    */
   onReady() {
-    this.log('页面加载完成');
+    this.log('✅ 页面加载完成');
 
     // 从缓存加载数据
     this.loadCachedData();
@@ -42,7 +42,7 @@ class MainLogic {
     const cachedData = window.storageManager.load();
     
     if (cachedData) {
-      this.log('从缓存加载数据');
+      this.log('✅ 从缓存加载数据');
       window.requestInterceptor.processServerData(cachedData);
     } else {
       this.log('无缓存数据');
@@ -64,7 +64,7 @@ class MainLogic {
       this.log('缓存已清除');
     };
 
-    this.log('全局API已设置');
+    this.log('✅ 全局API已设置');
   }
 
   // 日志方法
