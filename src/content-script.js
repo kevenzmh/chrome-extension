@@ -4,6 +4,22 @@
 (function() {
   console.log('%c[ContentScript] 🚀 启动验证', 'color: #4CAF50; font-weight: bold');
 
+  // 设置控制台错误过滤
+  if (CONFIG?.CONSOLE_FILTER?.ENABLED) {
+    const originalError = console.error;
+    console.error = function(...args) {
+      const message = args.join(' ');
+      const shouldFilter = CONFIG.CONSOLE_FILTER.FILTERED_ERRORS.some(keyword => 
+        message.includes(keyword)
+      );
+      
+      if (!shouldFilter) {
+        originalError.apply(console, args);
+      }
+    };
+    console.log('%c[ContentScript] 控制台错误过滤已启用', 'color: #FF9800');
+  }
+
   // 验证关键对象
   const requiredObjects = {
     'CONFIG': '配置对象',

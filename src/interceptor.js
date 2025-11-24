@@ -90,7 +90,24 @@ class RequestInterceptor {
    */
   handleResponse(response, handler) {
     try {
-      const url = response.config.url;
+      const url = response.config?.url || '';
+      
+      // 只处理我们关心的URL，其他的直接放行
+      const shouldProcess = url && (
+        url.includes(CONFIG.TARGET_URLS.OVERVIEW) ||
+        url.includes(CONFIG.TARGET_URLS.CAMPAIGN_LIST) ||
+        url.includes(CONFIG.TARGET_URLS.AD_GROUP_LIST) ||
+        url.includes(CONFIG.TARGET_URLS.AGE_SERVICE) ||
+        url.includes(CONFIG.TARGET_URLS.GENDER_SERVICE) ||
+        url.includes(CONFIG.TARGET_URLS.DEVICE_SERVICE)
+      );
+
+      if (!shouldProcess) {
+        // 不是我们关心的URL，直接放行
+        handler.next(response);
+        return;
+      }
+
       this.log('拦截到响应URL:', url);
 
       // 根据URL匹配不同的处理器
@@ -112,9 +129,6 @@ class RequestInterceptor {
       } else if (url.includes(CONFIG.TARGET_URLS.DEVICE_SERVICE)) {
         this.log('匹配到Device Service URL，开始处理');
         this.handleDeviceServiceResponse(response);
-      } else {
-        // 记录未匹配的URL以便调试
-        this.log('未匹配的URL:', url);
       }
 
     } catch (error) {

@@ -24,28 +24,83 @@ class DOMHandler {
   modifyExistingStats() {
     // 延迟执行，确保页面元素已加载
     setTimeout(() => {
-      // 根据 aria-label 查找"展示次数"的容器
-      const containers = document.querySelectorAll('.stats[aria-label*="展示次数"]');
-      containers.forEach(container => {
-        const statElement = container.querySelector('.stat.label-value');
-        if (statElement) {
-          statElement.textContent = '3000';
-          statElement.setAttribute('title', '3,000');
-          this.log('已修改展示次数: -> 3000');
-        }
-      });
-
-      // 根据 aria-label 查找包含美元符号的费用相关容器
-      const costContainers = document.querySelectorAll('.stats[aria-label*="US$"], .stats[aria-label*="费用"]');
-      costContainers.forEach(container => {
-        const statElement = container.querySelector('.stat.label-value');
-        if (statElement && statElement.textContent.includes('$')) {
-          statElement.textContent = '$8888';
-          statElement.setAttribute('title', 'US$8888');
-          this.log('已修改费用: -> $8888');
-        }
-      });
+      this.updateAllMetrics();
     }, 1000);
+  }
+
+  /**
+   * 更新所有指标
+   */
+  updateAllMetrics() {
+    const mockData = this.getMockData();
+    if (!mockData) return;
+
+    // 1. 点击次数
+    this.updateMetric('点击次数', mockData.clicks);
+
+    // 2. 展示次数
+    this.updateMetric('展示次数', mockData.impressions);
+
+    // 3. 平均每次点击费用
+    this.updateMetric('平均每次点击费用', mockData.cost_per_click, true);
+
+    // 4. 费用
+    this.updateMetric('费用', mockData.cost, true);
+  }
+
+  /**
+   * 更新单个指标
+   */
+  updateMetric(metricName, value, isCurrency = false) {
+    if (!value) return;
+
+    const containers = document.querySelectorAll(`.stats[aria-label*="${metricName}"]`);
+    containers.forEach(container => {
+      const statElement = container.querySelector('.stat.label-value');
+      if (statElement) {
+        if (isCurrency) {
+          statElement.textContent = `$${this.formatNumber(value)}`;
+          statElement.setAttribute('title', `US$${this.formatNumberWithComma(value)}`);
+        } else {
+          statElement.textContent = this.formatNumber(value);
+          statElement.setAttribute('title', this.formatNumberWithComma(value));
+        }
+        this.log(`已修改${metricName}: -> ${value}`);
+      }
+    });
+  }
+
+  /**
+   * 从 mock 数据获取账户数据
+   */
+  getMockData() {
+    if (window.mockDataLoader) {
+      const accountData = window.mockDataLoader.getData('account');
+      if (accountData) {
+        return accountData;
+      }
+    }
+    // 如果无法获取，返回默认值
+    return {
+      clicks: 2580,
+      impressions: 61428,
+      cost_per_click: 4.91,
+      cost: 12680.50
+    };
+  }
+
+  /**
+   * 格式化数字（不带逗号）
+   */
+  formatNumber(num) {
+    return num.toString();
+  }
+
+  /**
+   * 格式化数字（带逗号）
+   */
+  formatNumberWithComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   /**
@@ -104,25 +159,50 @@ class DOMHandler {
   modifyStatValues(node) {
     if (!node.querySelectorAll) return;
 
-    // 根据 aria-label 查找"展示次数"的容器
-    const containers = node.querySelectorAll('.stats[aria-label*="展示次数"]');
-    containers.forEach(container => {
+    const mockData = this.getMockData();
+    if (!mockData) return;
+
+    // 1. 点击次数
+    const clickContainers = node.querySelectorAll('.stats[aria-label*="点击次数"]');
+    clickContainers.forEach(container => {
       const statElement = container.querySelector('.stat.label-value');
       if (statElement) {
-        statElement.textContent = '3000';
-        statElement.setAttribute('title', '3,000');
-        this.log('统计数值已修改: 展示次数 -> 3000');
+        statElement.textContent = this.formatNumber(mockData.clicks);
+        statElement.setAttribute('title', this.formatNumberWithComma(mockData.clicks));
+        this.log(`统计数值已修改: 点击次数 -> ${mockData.clicks}`);
       }
     });
 
-    // 根据 aria-label 查找包含美元符号的费用相关容器
-    const costContainers = node.querySelectorAll('.stats[aria-label*="US$"], .stats[aria-label*="费用"]');
+    // 2. 展示次数
+    const impressionContainers = node.querySelectorAll('.stats[aria-label*="展示次数"]');
+    impressionContainers.forEach(container => {
+      const statElement = container.querySelector('.stat.label-value');
+      if (statElement) {
+        statElement.textContent = this.formatNumber(mockData.impressions);
+        statElement.setAttribute('title', this.formatNumberWithComma(mockData.impressions));
+        this.log(`统计数值已修改: 展示次数 -> ${mockData.impressions}`);
+      }
+    });
+
+    // 3. 平均每次点击费用
+    const cpcContainers = node.querySelectorAll('.stats[aria-label*="平均每次点击费用"]');
+    cpcContainers.forEach(container => {
+      const statElement = container.querySelector('.stat.label-value');
+      if (statElement) {
+        statElement.textContent = `$${this.formatNumber(mockData.cost_per_click)}`;
+        statElement.setAttribute('title', `US$${this.formatNumberWithComma(mockData.cost_per_click)}`);
+        this.log(`统计数值已修改: 平均每次点击费用 -> $${mockData.cost_per_click}`);
+      }
+    });
+
+    // 4. 费用
+    const costContainers = node.querySelectorAll('.stats[aria-label*="费用"]');
     costContainers.forEach(container => {
       const statElement = container.querySelector('.stat.label-value');
-      if (statElement && statElement.textContent.includes('$')) {
-        statElement.textContent = '$8888';
-        statElement.setAttribute('title', 'US$8888');
-        this.log('统计数值已修改: 费用 -> $8888');
+      if (statElement) {
+        statElement.textContent = `$${this.formatNumber(mockData.cost)}`;
+        statElement.setAttribute('title', `US$${this.formatNumberWithComma(mockData.cost)}`);
+        this.log(`统计数值已修改: 费用 -> $${mockData.cost}`);
       }
     });
   }

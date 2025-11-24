@@ -69,7 +69,18 @@ const CONFIG = {
   },
 
   // 调试模式
-  DEBUG: true
+  DEBUG: true,
+
+  // 控制台错误过滤
+  CONSOLE_FILTER: {
+    ENABLED: true,
+    // 需要过滤的错误关键词
+    FILTERED_ERRORS: [
+      'AdTypePrefetcher',
+      'StreamyHttpError',
+      'ERROR_WITH_EMPTY_MESSAGE'
+    ]
+  }
 };
 
 // 导出配置
