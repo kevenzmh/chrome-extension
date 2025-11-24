@@ -92,6 +92,11 @@ class RequestInterceptor {
     try {
       const url = response.config?.url || '';
       
+      // 调试模式：记录所有包含 Service 的 URL
+      if (CONFIG.DEBUG && url.includes('Service')) {
+        console.log('%c[拦截器] 检测到 Service URL:', 'color: #9C27B0', url);
+      }
+      
       // 只处理我们关心的URL，其他的直接放行
       const shouldProcess = url && (
         url.includes(CONFIG.TARGET_URLS.OVERVIEW) ||
@@ -393,16 +398,59 @@ class RequestInterceptor {
    */
   fillOverviewData(data) {
     try {
-      // 填充折线图数据
+      // 填充折线图数据（使用时间序列数据）
       if (data['1'] && data['1']['1'] && data['1']['1']['2']) {
-        const chartData = data['1']['1']['2'][0]['2'];
-        if (chartData) {
-          chartData['1'] = [
-            { 1: this.adsData['stats.clicks'] || 0 },
-            { 1: this.adsData['stats.impressions'] || 0 },
-            { 1: this.adsData['stats.cost_per_click'] || 0 },
-            { 1: this.adsData['stats.cost'] || 0 }
-          ];
+        const chartSection = data['1']['1']['2'][0];
+        if (chartSection && chartSection['2']) {
+          const chartData = chartSection['2'];
+          
+          // 获取时间序列数据
+          const timeSeriesData = this.latestServerData?.accountCostChart || [];
+          
+          if (timeSeriesData.length > 0) {
+            // 填充图表的多个数据点（每天的数据）
+            chartData['1'] = timeSeriesData.map(day => ({ 1: day.clicks }));
+            chartData['3'] = timeSeriesData.map(day => day.clicks);
+            
+            // 如果有多个指标，填充所有指标的数据
+            if (chartData['13']) {
+              chartData['13'] = [
+                {
+                  1: { 1: this.adsData['stats.clicks'] || 0 },
+                  3: this.adsData['stats.clicks'] || 0,
+                  5: { 1: 1, 2: 'clicks' },
+                  // 添加时间序列数据点
+                  7: timeSeriesData.map(day => ({ 1: day.clicks }))
+                },
+                {
+                  1: { 1: this.adsData['stats.impressions'] || 0 },
+                  3: this.adsData['stats.impressions'] || 0,
+                  5: { 1: 1, 2: 'impressions' },
+                  7: timeSeriesData.map(day => ({ 1: day.impressions }))
+                },
+                {
+                  1: { 1: this.adsData['stats.cost_per_click'] || 0 },
+                  3: this.adsData['stats.cost_per_click'] || 0,
+                  5: { 1: 1, 2: 'cost_per_click' },
+                  7: timeSeriesData.map(day => ({ 1: day.cost_per_click }))
+                },
+                {
+                  1: { 1: this.adsData['stats.cost'] || 0 },
+                  3: this.adsData['stats.cost'] || 0,
+                  5: { 1: 1, 2: 'cost' },
+                  7: timeSeriesData.map(day => ({ 1: day.cost }))
+                }
+              ];
+            }
+          } else {
+            // 如果没有时间序列数据，使用总计数据
+            chartData['1'] = [
+              { 1: this.adsData['stats.clicks'] || 0 },
+              { 1: this.adsData['stats.impressions'] || 0 },
+              { 1: this.adsData['stats.cost_per_click'] || 0 },
+              { 1: this.adsData['stats.cost'] || 0 }
+            ];
+          }
         }
       }
 

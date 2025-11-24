@@ -14,47 +14,83 @@ class ResponseHandlers {
       const data = this.processor.safeJsonParse(response.response);
       if (!data) return;
 
-      // 修改折线图数据
+      // 修改折线图数据（使用时间序列数据）
       if (this.hasPath(data, '1.1.2.0.2')) {
         const chartSection = data['1']['1']['2'][0]['2'];
         const statsData = window.requestInterceptor.adsData;
+        const timeSeriesData = window.requestInterceptor.latestServerData?.accountCostChart || [];
 
-        chartSection['1'] = [
-          { 1: statsData['stats.clicks'] },
-          { 1: statsData['stats.impressions'] },
-          { 1: statsData['stats.cost_per_click'] },
-          { 1: statsData['stats.cost'] }
-        ];
+        // 如果有时间序列数据，使用它来填充图表
+        if (timeSeriesData.length > 0) {
+          // 填充每天的数据点
+          chartSection['1'] = timeSeriesData.map(day => ({ 1: day.clicks }));
+          chartSection['3'] = timeSeriesData.map(day => day.clicks);
 
-        chartSection['3'] = [
-          statsData['stats.clicks'],
-          statsData['stats.impressions'],
-          statsData['stats.cost_per_click'],
-          statsData['stats.cost']
-        ];
+          chartSection['13'] = [
+            {
+              1: { 1: statsData['stats.clicks'] },
+              3: statsData['stats.clicks'],
+              5: { 1: 1, 2: 'clicks' },
+              7: timeSeriesData.map(day => ({ 1: day.clicks }))
+            },
+            {
+              1: { 1: statsData['stats.impressions'] },
+              3: statsData['stats.impressions'],
+              5: { 1: 1, 2: 'impressions' },
+              7: timeSeriesData.map(day => ({ 1: day.impressions }))
+            },
+            {
+              1: { 1: statsData['stats.cost_per_click'] },
+              3: statsData['stats.cost_per_click'],
+              5: { 1: 1, 2: 'cost_per_click' },
+              7: timeSeriesData.map(day => ({ 1: day.cost_per_click }))
+            },
+            {
+              1: { 1: statsData['stats.cost'] },
+              3: statsData['stats.cost'],
+              5: { 1: 1, 2: 'cost' },
+              7: timeSeriesData.map(day => ({ 1: day.cost }))
+            }
+          ];
+        } else {
+          // 如果没有时间序列数据，使用总计数据
+          chartSection['1'] = [
+            { 1: statsData['stats.clicks'] },
+            { 1: statsData['stats.impressions'] },
+            { 1: statsData['stats.cost_per_click'] },
+            { 1: statsData['stats.cost'] }
+          ];
 
-        chartSection['13'] = [
-          {
-            1: { 1: statsData['stats.clicks'] },
-            3: statsData['stats.clicks'],
-            5: { 1: 1, 2: 'clicks' }
-          },
-          {
-            1: { 1: statsData['stats.impressions'] },
-            3: statsData['stats.impressions'],
-            5: { 1: 1, 2: 'impressions' }
-          },
-          {
-            1: { 1: statsData['stats.cost_per_click'] },
-            3: statsData['stats.cost_per_click'],
-            5: { 1: 1, 2: 'cost_per_click' }
-          },
-          {
-            1: { 1: statsData['stats.cost'] },
-            3: statsData['stats.cost'],
-            5: { 1: 1, 2: 'cost' }
-          }
-        ];
+          chartSection['3'] = [
+            statsData['stats.clicks'],
+            statsData['stats.impressions'],
+            statsData['stats.cost_per_click'],
+            statsData['stats.cost']
+          ];
+
+          chartSection['13'] = [
+            {
+              1: { 1: statsData['stats.clicks'] },
+              3: statsData['stats.clicks'],
+              5: { 1: 1, 2: 'clicks' }
+            },
+            {
+              1: { 1: statsData['stats.impressions'] },
+              3: statsData['stats.impressions'],
+              5: { 1: 1, 2: 'impressions' }
+            },
+            {
+              1: { 1: statsData['stats.cost_per_click'] },
+              3: statsData['stats.cost_per_click'],
+              5: { 1: 1, 2: 'cost_per_click' }
+            },
+            {
+              1: { 1: statsData['stats.cost'] },
+              3: statsData['stats.cost'],
+              5: { 1: 1, 2: 'cost' }
+            }
+          ];
+        }
       }
 
       // 修改广告系列效果摘要

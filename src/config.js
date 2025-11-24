@@ -74,11 +74,12 @@ const CONFIG = {
   // 控制台错误过滤
   CONSOLE_FILTER: {
     ENABLED: true,
-    // 需要过滤的错误关键词
+    // 需要过滤的错误关键词（这些是 Google Ads 内部的非关键错误）
     FILTERED_ERRORS: [
       'AdTypePrefetcher',
       'StreamyHttpError',
-      'ERROR_WITH_EMPTY_MESSAGE'
+      'ERROR_WITH_EMPTY_MESSAGE',
+      'iplStatusHeartbeat'
     ]
   }
 };

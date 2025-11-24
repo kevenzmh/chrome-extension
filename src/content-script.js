@@ -9,6 +9,8 @@
     const originalError = console.error;
     console.error = function(...args) {
       const message = args.join(' ');
+      
+      // 检查是否需要过滤
       const shouldFilter = CONFIG.CONSOLE_FILTER.FILTERED_ERRORS.some(keyword => 
         message.includes(keyword)
       );
@@ -17,6 +19,33 @@
         originalError.apply(console, args);
       }
     };
+
+    // 过滤 window.onerror 中的错误
+    const originalOnError = window.onerror;
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errorMessage = message?.toString() || '';
+      const shouldFilter = CONFIG.CONSOLE_FILTER.FILTERED_ERRORS.some(keyword => 
+        errorMessage.includes(keyword) || source?.includes(keyword)
+      );
+      
+      if (!shouldFilter && originalOnError) {
+        return originalOnError.call(this, message, source, lineno, colno, error);
+      }
+      return true; // 阻止默认错误处理
+    };
+
+    // 过滤 Promise 未捕获的错误
+    window.addEventListener('unhandledrejection', function(event) {
+      const errorMessage = event.reason?.toString() || event.reason?.message || '';
+      const shouldFilter = CONFIG.CONSOLE_FILTER.FILTERED_ERRORS.some(keyword => 
+        errorMessage.includes(keyword)
+      );
+      
+      if (shouldFilter) {
+        event.preventDefault(); // 阻止错误显示
+      }
+    });
+
     console.log('%c[ContentScript] 控制台错误过滤已启用', 'color: #FF9800');
   }
 
