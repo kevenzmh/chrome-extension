@@ -42,10 +42,13 @@ npm run build:zip
 
 ## 📖 文档
 
-- [快速开始指南](./QUICK_START.md) - 5 分钟上手
-- [构建指南](./BUILD_GUIDE.md) - 详细的构建配置说明
-- [项目结构](./PROJECT_STRUCTURE.md) - 代码组织和模块说明
-- [图表调试](./DEBUG_CHART.md) - 如何调试悬浮图表
+- [快速开始指南](./docs/QUICK_START.md) - 5 分钟上手
+- [构建指南](./docs/BUILD_GUIDE.md) - 详细的构建配置说明
+- [项目结构](./docs/PROJECT_STRUCTURE.md) - 代码组织和模块说明
+- [图表调试](./docs/DEBUG_CHART.md) - 如何调试悬浮图表
+- [贡献指南](./docs/CONTRIBUTING.md) - 如何参与贡献
+- [更新日志](./docs/CHANGELOG.md) - 版本历史
+- [待办事项](./docs/TODO.md) - 开发计划
 
 ## 🏗️ 项目结构
 
