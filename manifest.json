@@ -24,12 +24,6 @@
         "http://*.google.com/*"
       ],
       "js": [
-        "lib/ajaxhook.min.js",
-        "src/config.js",
-        "src/storage.js",
-        "src/interceptor.js",
-        "src/dom-handler.js",
-        "src/main-logic.js",
         "src/content-script.js"
       ],
       "run_at": "document_start",

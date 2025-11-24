@@ -21,18 +21,20 @@ class DOMHandler {
    * 劫持Node原型方法
    */
   hookNodeMethods() {
+    const self = this; // 保存DOMHandler实例的引用
+    
     // 劫持appendChild
     const originalAppendChild = Node.prototype.appendChild;
-    Node.prototype.appendChild = (node) => {
-      this.processNode(node);
-      return originalAppendChild.call(this, node);
+    Node.prototype.appendChild = function(node) {
+      self.processNode(node);
+      return originalAppendChild.call(this, node); // this指向调用appendChild的DOM节点
     };
 
     // 劫持insertBefore
     const originalInsertBefore = Node.prototype.insertBefore;
-    Node.prototype.insertBefore = (newNode, referenceNode) => {
-      this.processNode(newNode);
-      return originalInsertBefore.call(this, newNode, referenceNode);
+    Node.prototype.insertBefore = function(newNode, referenceNode) {
+      self.processNode(newNode);
+      return originalInsertBefore.call(this, newNode, referenceNode); // this指向调用insertBefore的DOM节点
     };
 
     this.log('Node方法已劫持');

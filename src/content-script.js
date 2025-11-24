@@ -20,8 +20,15 @@ class ContentScriptManager {
    */
   injectScripts() {
     const scripts = [
-      'lib/ajaxhook.min.js',
-      'src/main-logic.js'
+      'src/config.js',           // 首先注入配置文件
+      'src/utils.js',            // 工具函数
+      'src/storage.js',          // 存储管理器
+      'lib/ajaxhook.min.js',     // AJAX钩子库
+      'src/data-processor.js',   // 数据处理器
+      'src/response-handlers.js', // 响应处理器
+      'src/interceptor.js',      // 请求拦截器
+      'src/dom-handler.js',      // DOM处理器
+      'src/main-logic.js'        // 主逻辑（最后注入）
     ];
 
     scripts.forEach((scriptPath, index) => {
@@ -39,7 +46,7 @@ class ContentScriptManager {
       const script = document.createElement('script');
       script.src = chrome.runtime.getURL(path);
       script.async = false;
-      
+
       script.onload = () => {
         script.remove();
         this.log(`脚本已注入: ${path}`);
