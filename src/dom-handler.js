@@ -14,7 +14,38 @@ class DOMHandler {
     this.hookNodeMethods();
     this.observeDOM();
     this.monitorDatePicker();
+    this.modifyExistingStats();
     this.log('DOM处理器已启动');
+  }
+
+  /**
+   * 修改页面上已存在的统计数值
+   */
+  modifyExistingStats() {
+    // 延迟执行，确保页面元素已加载
+    setTimeout(() => {
+      // 根据 aria-label 查找"展示次数"的容器
+      const containers = document.querySelectorAll('.stats[aria-label*="展示次数"]');
+      containers.forEach(container => {
+        const statElement = container.querySelector('.stat.label-value');
+        if (statElement) {
+          statElement.textContent = '3000';
+          statElement.setAttribute('title', '3,000');
+          this.log('已修改展示次数: -> 3000');
+        }
+      });
+
+      // 根据 aria-label 查找包含美元符号的费用相关容器
+      const costContainers = document.querySelectorAll('.stats[aria-label*="US$"], .stats[aria-label*="费用"]');
+      costContainers.forEach(container => {
+        const statElement = container.querySelector('.stat.label-value');
+        if (statElement && statElement.textContent.includes('$')) {
+          statElement.textContent = '$8888';
+          statElement.setAttribute('title', 'US$8888');
+          this.log('已修改费用: -> $8888');
+        }
+      });
+    }, 1000);
   }
 
   /**
@@ -60,8 +91,40 @@ class DOMHandler {
       this.log('账户信息已修改');
     }
 
+    // 修改统计数值
+    this.modifyStatValues(node);
+
     // 隐藏只读按钮
     this.hideReadonlyButtons(node);
+  }
+
+  /**
+   * 修改统计数值
+   */
+  modifyStatValues(node) {
+    if (!node.querySelectorAll) return;
+
+    // 根据 aria-label 查找"展示次数"的容器
+    const containers = node.querySelectorAll('.stats[aria-label*="展示次数"]');
+    containers.forEach(container => {
+      const statElement = container.querySelector('.stat.label-value');
+      if (statElement) {
+        statElement.textContent = '3000';
+        statElement.setAttribute('title', '3,000');
+        this.log('统计数值已修改: 展示次数 -> 3000');
+      }
+    });
+
+    // 根据 aria-label 查找包含美元符号的费用相关容器
+    const costContainers = node.querySelectorAll('.stats[aria-label*="US$"], .stats[aria-label*="费用"]');
+    costContainers.forEach(container => {
+      const statElement = container.querySelector('.stat.label-value');
+      if (statElement && statElement.textContent.includes('$')) {
+        statElement.textContent = '$8888';
+        statElement.setAttribute('title', 'US$8888');
+        this.log('统计数值已修改: 费用 -> $8888');
+      }
+    });
   }
 
   /**
