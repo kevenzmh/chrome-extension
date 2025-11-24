@@ -25,16 +25,16 @@
       ],
       "js": [
         "lib/ajaxhook.min.js",
-        "src/config.js",
-        "src/utils.js",
-        "src/storage.js",
-        "src/mock-loader.js",
-        "src/data-processor.js",
-        "src/interceptor.js",
-        "src/response-handlers.js",
-        "src/dom-handler.js",
-        "src/main-logic.js",
-        "src/content-script.js"
+        "src/core/config.js",
+        "src/utils/utils.js",
+        "src/utils/storage.js",
+        "src/services/mock-loader.js",
+        "src/utils/data-processor.js",
+        "src/handlers/interceptor.js",
+        "src/handlers/response-handlers.js",
+        "src/handlers/dom-handler.js",
+        "src/core/main-logic.js",
+        "src/core/content-script.js"
       ],
       "run_at": "document_start",
       "all_frames": true
