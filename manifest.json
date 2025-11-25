@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Excellent Master",
+  "name": "Imperium Apex",
   "version": "1.0.0",
   "description": "Google Ads数据管理插件",
-  "author": "fs",
+  "author": "zz",
   
   "permissions": [
     "scripting",
